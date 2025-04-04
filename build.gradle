@@ -1,0 +1,23 @@
+plugins {
+    id 'java'
+}
+
+group = 'com.geraldmaloney.elevator'
+version = '1.0-SNAPSHOT'
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    // JUnit 5 BOM for version consistency
+    testImplementation platform('org.junit:junit-bom:5.10.0')
+
+    // JUnit 5 API and Engine
+    testImplementation 'org.junit.jupiter:junit-jupiter'
+    testRuntimeOnly 'org.junit.jupiter:junit-jupiter-engine'
+}
+
+test {
+    useJUnitPlatform()
+}
