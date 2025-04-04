@@ -1,4 +1,4 @@
-# Elevator Simulation — Gerald D. Maloney Senior Software Engineer Candidate
+# Elevator Simulation — Gerald D. Maloney, Senior Software Engineer Candidate
 
 Elevator simulation for an interactive console-driven system.  
 Developed in response to a BlueStaq software engineering challenge.
@@ -11,8 +11,10 @@ Developed in response to a BlueStaq software engineering challenge.
 - Author: Gerald Maloney
 - Position: Senior Software Engineer candidate
 - Challenge Context: 2–3 day focused build window outside normal working hours
-- Time Used: ~9-10 hours from start to finish. 3 hours Research, Setup, Design, Prototyping methods. 
-4.5-5.5 hours of coding the complete product, and 1.5 hours for testing and README.    
+- Time Used: ~9–10 hours total  
+  • 3 hours on research, environment setup, design, and prototyping  
+  • 4.5–5.5 hours coding the complete product  
+  • 1.5 hours testing, README writing, and polish
 
 ---
 
@@ -22,7 +24,8 @@ This project simulates a real-world elevator system using Java.
 It models stateful behavior including direction-aware traversal, queued floor requests, emergency protocols, and modular architecture. 
 The system utilizes a SCAN-style elevator scheduler, prioritizing direction-first travel and intelligent mid-route floor stops.
 User input is captured via a console interface with stepwise cycle logic. 
-All state is printed clearly for user validation. The system has been tested interactively and is supported with basic unit tests for key input logic.
+All system states are clearly displayed at runtime for user visibility and validation. 
+The system has been tested interactively and is supported with very basic unit tests for key input logic and proof of use.
 
 ---
 
@@ -35,7 +38,7 @@ All state is printed clearly for user validation. The system has been tested int
     - ElevatorStatus: Movement state (up, down, stopped)
     - DoorStatus: Physical door state
     - ElevatorRunMode: Emergency and operational modes
-- *DEPRECATED* Elevator: First attempt at Elevator class. Got it working, but then opted to use an abstract class instead.
+- *DEPRECATED* Elevator: First attempt at Elevator class. Fully functional, but later replaced by an abstract class to support extensibility.
 
 System is organized around modular OOP principles. 
 The core elevator is decoupled from its interface, and future elevator types (freight, express) can be derived from AbstractElevator.
@@ -63,7 +66,7 @@ The core elevator is decoupled from its interface, and future elevator types (fr
 - Request queue is managed as a PriorityQueue with custom comparator to match elevator direction
 - Final destination is tracked separately from intermediate stops to maintain directional integrity
 - AbstractElevator defines the full FSM and base system behavior; PassengerElevator only implements unique subclass behavior
-- All user input is validated through a single entry point and converted to numerical floors
+- All user input is normalized through a single entry point, then validated and parsed into actionable floor values.
 - Door logic includes distinct handling for emergency states, such as overload and E-STOP
 
 System behavior mimics real elevator logic—requests do not cause direction reversal unless the mission is complete. Interrupts are queued but honored only when direction permits.
@@ -74,10 +77,7 @@ System behavior mimics real elevator logic—requests do not cause direction rev
 
 1. Install Java (version 17+) and Gradle
 2. Clone or download the repository
-3. From the project root, run:
-
-
-Alternatively, you can run Main.java directly in IntelliJ or another IDE with Gradle support.
+3. Run Main.java directly in IntelliJ or another IDE with Gradle support or via Command Line.
 
 ---
 
@@ -94,10 +94,9 @@ Tests cover:
 - Floor label mapping
 
 Automated testing was not part of the assignment, but it is best practice for software engineers to write Unit Tests for 
-their code prior to QA/Testing takes over. And I wanted to show I can adapt to new tools on the fly. I am used to NUnit in 
-VS2022, but IntelliJ's IDEA and JUnit have been a very easy switch for me once I understood the difference between Java ByteCode
-and C-based languages Machine Code and how they differ in compilation and processing. Kind of wild you can treat enums like objects in Java,
-but I digress. 
+their code prior to QA/Testing takes over. And I wanted to show I can adapt to new tools on the fly. 
+I’m experienced with NUnit in Visual Studio, but transitioning to IntelliJ IDEA and JUnit was straightforward after understanding the differences between Java bytecode and C-based machine code compilation. 
+It was a fun shift—especially discovering how Java treats enums like objects. Kind of wild you can treat enums like objects in Java, but I digress. 
 
 ---
 
@@ -111,7 +110,7 @@ but I digress.
 
 ## 9. What I'd Do Next
 
-- Get rid of magic string and magic number code smells with strict data typing
+- Replace magic strings and numbers with enums or constants for maintainability and readability.
 - Clean up door lock, unlock, open, close, sequence and tie states together logically.
 - Extract safety protocols (fire, earthquake, etc.) into dedicated strategy modules, so they can be swapped 
 according to elevator type. This would amend some duplicate control path logic in the code.
@@ -136,17 +135,16 @@ under undefined constraints.
 So, starting with my environment. I installed a trial license of IntelliJ's IDEA, all needed transitive libraries, 
 configured the environment, and got a Hello World running.
 
-From there, I began by doing some research on elevators and their features and safety protocols. From there, I began 
-reverse engineering requirements. That was when I started to really think about how elevators make decisions regarding what floor to go
-to next out of a queue or options. From there I looked to see what industry practiced algorithms are used for elevators and 
-came across SCAN-style tree traversal algorithms. After getting a point to point elevator and door system working, I began 
-implementing the SCAN-style scheduler into the elevator. Once testing was complete for that, I moved on to implementing a 
-safety menu, because key requirements for elevators revolve around passenger or payload safety. I researched common protocols:
-Fire, Earthquake, Hurricane, et al. and implemented simulated safety protocols to control various run modes and door status states.
+From there, I began by doing some research on elevators and their features and safety protocols and began 
+reverse engineering requirements. That’s when I began thinking critically about how elevators prioritize queued floor requests in real time.
+Next, I looked to see what industry practiced algorithms are used for elevators and came across SCAN-style tree traversal algorithms. 
+After getting a point-to-point elevator and door system working, I began implementing the SCAN-style scheduler into the elevator. 
+Once testing was complete for that, I moved on to implementing a safety menu, because key requirements for elevators revolve around passenger or payload safety. 
+I researched common protocols: Fire, Earthquake, Hurricane, et al. and implemented simulated safety protocols to control various run modes and door status states.
 Once that was complete, I implemented simple JUnit tests to showcase I can perform JUnit automated testing.
-Finally, I thought in terms of modularity and scalability and swapped the deprecated Elevator class with an Abstract Elevator Class,
-which I inherited into a Passenger Elevator. But with the Abstract Elevator Base Class other elevator types such as Freight 
-Elevators, Service elevators, et al. can be created from the Abstract Elevator Class. 
+Finally, I focused on modularity and scalability—refactoring the original `Elevator` class into an `AbstractElevator` base, which `PassengerElevator` inherits from. 
+This provides a clean foundation for future elevator types (freight, express, etc.).
+
 
 
 From my perspective, this project was developed to demonstrate my ability to model real-world systems and design modular solutions.
@@ -157,9 +155,31 @@ My goal was not to over-engineer the solution, but to build something representa
 - Prove function under constraints
 - Leave room for evolution and expansion
 
-Thank you for taking the time to review this submission. The opportunities BlueStaq is offering are truly exciting to me!
-I look forward to meeting with you all and proving my worth for a place on Your Team! 
 
-– Gerald Maloney
+## About Me
 
+Hi, I’m Gerald Maloney. I moved from the Chicagoland area to Colorado Springs in 2018 with my wife, Alyssa. 
+Together, we’re raising two amazing and bright daughters— Harper (5) and Nora (3). 
+
+### My Hobbies:
+In no particular order:  
+3D Printing, AI, Laser Engraving, 
+All Things Games (PC, tabletop, cards, board), Drone flying & building, 
+Marksmanship, Cooking, Whiskey Collecting, Boxing/MMA, Books(philosophy, tech manuals, some classics), 
+Old Kung Fu Movies, and Sci-Fi TV.
+
+### What Drives Me:
+- My Family.
+- Challenge and growth—if I’m not building, I’m not breathing
+- Working with cutting-age tech and modernizing legacy systems  
+- Serving the Warfighter—*“To serve those that serve. One Team; One Fight.”*
+
+This project was more than a challenge—it was a chance to model systems, explore modular design under time constraints, and showcase the kind of engineer I am:  
+Fast. Precise. Adaptable. Real.
+
+If you’ve read this far—thank you for your time and consideration.  
+Looking forward to our conversation!
+
+—
+**Gerald Maloney**
 
