@@ -1,5 +1,6 @@
 plugins {
     id 'java'
+    id 'application'
 }
 
 group = 'com.geraldmaloney.elevator'
@@ -21,3 +22,12 @@ dependencies {
 test {
     useJUnitPlatform()
 }
+
+application {
+    mainClass = 'com.geraldmaloney.elevator.Main'
+}
+
+run {
+    standardInput = System.in
+}
+
